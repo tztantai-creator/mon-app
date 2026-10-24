@@ -114,6 +114,7 @@ body{font-family:'Noto Sans Thai',system-ui,sans-serif;color:var(--ink);backgrou
 .set-h{font-size:13px;color:var(--muted);font-weight:500;margin:4px 6px 8px}
 .set .row,.card>button.row{width:100%;border:0;border-bottom:1px solid var(--line);background:none;font:inherit;color:var(--ink);text-align:left;cursor:pointer}
 .set .row:last-child{border-bottom:0}
+.set a.row{text-decoration:none}
 .mini{width:36px;height:36px;border-radius:12px;object-fit:cover;display:block}
 .me-pic{position:relative;width:96px;height:96px;font-size:48px;margin:4px auto 10px;cursor:pointer;padding:0}
 .me-pic img{border-radius:50%}
@@ -308,14 +309,9 @@ body{font-family:'Noto Sans Thai',system-ui,sans-serif;color:var(--ink);backgrou
   <p class="foot">บันทึกผ่าน Mon ใน Telegram เช่น “กินข้าวมันไก่ 50 บาท”</p>
 </section>
 
-<!-- PROFILE -->
-<section class="view" id="v-profile">
-  <div class="card" style="text-align:center">
-    <button class="avatar me-pic" id="pAvatar" data-pick="mon-avatar" aria-label="เปลี่ยนรูปโปรไฟล์">🧑🏻<span class="cam">📷</span></button>
-    <h1 style="font-size:20px" id="pName"></h1><p class="note">Personal CEO</p>
-    <p style="margin-top:10px;font-size:14px" id="pQuote"></p>
-  </div>
-  <div class="card" id="pStats"></div>
+<!-- SETTINGS -->
+<section class="view" id="v-settings">
+  <div class="head"><a class="back" href="#profile">‹</a><div><h1>ตั้งค่า</h1><small>ปรับแอปให้เป็นของคุณ</small></div></div>
   <h3 class="set-h">หน้าตาแอป</h3>
   <div class="card set">
     <button class="row" data-pick="mon-avatar"><span class="ic">🧑🏻</span><div class="grow">รูปโปรไฟล์<small>เลือกจากคลังรูปในเครื่อง</small></div><span class="chev">›</span></button>
@@ -332,6 +328,19 @@ body{font-family:'Noto Sans Thai',system-ui,sans-serif;color:var(--ink);backgrou
     <div class="row"><span class="ic">🔄</span><div class="grow">อัปเดตข้อมูล<small>Mac เปิดอยู่ = อัปเดตเองทุก 30 นาที</small></div></div>
     <div class="row" onclick="lockApp()" style="cursor:pointer"><span class="ic">🔒</span><div class="grow">ล็อกแอป<small>ลบรหัสที่จำไว้ในเครื่องนี้</small></div></div>
     <div class="row"><span class="ic">💬</span><div class="grow">บันทึกเพิ่ม<small>บอก Mon ทาง Telegram หรือ “บันทึก MON: …”</small></div></div>
+  </div>
+</section>
+
+<!-- PROFILE -->
+<section class="view" id="v-profile">
+  <div class="card" style="text-align:center">
+    <button class="avatar me-pic" id="pAvatar" data-pick="mon-avatar" aria-label="เปลี่ยนรูปโปรไฟล์">🧑🏻<span class="cam">📷</span></button>
+    <h1 style="font-size:20px" id="pName"></h1><p class="note">Personal CEO</p>
+    <p style="margin-top:10px;font-size:14px" id="pQuote"></p>
+  </div>
+  <div class="card" id="pStats"></div>
+  <div class="card set">
+    <a class="row" href="#settings"><span class="ic">⚙️</span><div class="grow">ตั้งค่า<small>รูป ชื่อ หน้าเปิด ล็อกแอป</small></div><span class="chev">›</span></a>
   </div>
 </section>
 
@@ -725,7 +734,7 @@ function route() {
   const name = (location.hash || '#home').slice(1);
   const v = document.getElementById('v-' + name) || document.getElementById('v-home');
   document.querySelectorAll('.view').forEach(x => x.classList.toggle('active', x === v));
-  document.querySelectorAll('.tabbar a').forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + name));
+  document.querySelectorAll('.tabbar a').forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + (name === 'settings' ? 'profile' : name)));
   if (name === 'chat') msgs.scrollTop = msgs.scrollHeight;
 }
 addEventListener('hashchange', route);
