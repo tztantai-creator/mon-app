@@ -86,6 +86,41 @@ body{font-family:'Noto Sans Thai',system-ui,sans-serif;color:var(--ink);backgrou
 .tabbar a.on b{filter:none}
 .splash{position:absolute;top:0;right:0;bottom:0;left:0;z-index:10;background:linear-gradient(180deg,#5aa6ff,#a8d3ff 60%,#e9f5ff);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;text-align:center;padding:24px;transition:opacity .4s}
 .splash.hide{opacity:0;pointer-events:none}
+/* 24 ต.ค. ลูกเล่นในแอป */
+.card.fx-in{animation:cardIn .45s cubic-bezier(.2,1.2,.4,1) both}
+@keyframes cardIn{from{opacity:0;transform:translateY(16px) scale(.97)}to{opacity:1;transform:none}}
+.card{transition:transform .15s}.card:active{transform:scale(.97)}
+.tabbar a.on b{animation:tabHop .45s cubic-bezier(.3,1.8,.5,1)}
+@keyframes tabHop{0%{transform:scale(.7)}60%{transform:scale(1.25) translateY(-3px)}100%{transform:none}}
+@media (prefers-reduced-motion:reduce){.card.fx-in,.tabbar a.on b{animation:none}}
+/* 24 ต.ค. ลูกเล่นหน้าแมว */
+.splash.photo{transition:opacity .55s,transform .55s}
+.splash.photo.hide{transform:translateY(-6%) scale(1.06)}
+.fx{position:absolute;top:0;right:0;bottom:0;left:0;pointer-events:none;overflow:hidden;z-index:0}
+.splash .brand,.splash>button{z-index:1}
+.fx .cloud{position:absolute;width:150px;height:46px;border-radius:99px;background:rgba(255,255,255,.55);filter:blur(6px);animation:drift 38s linear infinite}
+.fx .cloud.c2{top:44%;width:110px;height:34px;opacity:.7;animation-duration:52s;animation-delay:-20s}
+.fx .cloud.c1{top:21%;animation-delay:-8s}
+@keyframes drift{from{transform:translateX(-180px)}to{transform:translateX(520px)}}
+.fx .hrt{position:absolute;bottom:18%;color:#fff;font-size:18px;opacity:0;animation:rise 7s ease-in infinite;text-shadow:0 0 8px rgba(255,255,255,.8)}
+@keyframes rise{0%{opacity:0;transform:translate(0,0) scale(.6)}15%{opacity:.95}100%{opacity:0;transform:translate(18px,-260px) scale(1.15) rotate(12deg)}}
+.fx .spk{position:absolute;color:#fff;font-size:14px;animation:twk 2.8s ease-in-out infinite;text-shadow:0 0 10px #fff}
+@keyframes twk{0%,100%{opacity:.15;transform:scale(.6) rotate(0)}50%{opacity:1;transform:scale(1.15) rotate(45deg)}}
+.fx .note{position:absolute;left:30%;top:70%;color:#2f7de1;font-size:20px;font-weight:700;opacity:0;animation:note 4.5s ease-out infinite;text-shadow:0 0 6px #fff,0 0 2px #fff}
+@keyframes note{0%{opacity:0;transform:translate(0,0) rotate(-10deg)}20%{opacity:1}100%{opacity:0;transform:translate(-40px,-110px) rotate(15deg)}}
+.brand .mon{animation:bop .7s cubic-bezier(.3,1.6,.5,1) both}
+.brand .per{animation:up .6s .15s both}.brand .sub{animation:up .6s .28s both}
+.brand .say{animation:up .6s .42s both, sway 5s 1.2s ease-in-out infinite}
+.brand #lockForm{animation:up .6s .55s both, glow 3s 1.4s ease-in-out infinite}
+@keyframes bop{from{opacity:0;transform:rotate(-4deg) scale(.4)}to{opacity:1;transform:rotate(-4deg) scale(1)}}
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes sway{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(-1deg) translateY(-3px)}}
+@keyframes glow{0%,100%{box-shadow:0 6px 18px rgba(29,80,160,.25)}50%{box-shadow:0 6px 26px rgba(255,255,255,.75)}}
+.brand #lockForm.shake{animation:shake .45s}
+@keyframes shake{20%,60%{transform:translateX(-9px)}40%,80%{transform:translateX(9px)}}
+.pop-h{position:absolute;z-index:2;color:#ff7aa8;font-size:16px;pointer-events:none;animation:poph .9s ease-out forwards;text-shadow:0 0 4px #fff}
+@keyframes poph{from{opacity:1;transform:translate(-50%,0) scale(.6)}to{opacity:0;transform:translate(-50%,-60px) scale(1.3)}}
+@media (prefers-reduced-motion:reduce){.fx,.pop-h{display:none}.brand *{animation:none!important}}
 .splash .logo{font-size:52px;font-weight:700;letter-spacing:2px;line-height:1}
 .splash .logo small{display:block;font-size:22px;letter-spacing:6px;margin-top:6px}
 .splash .cat{font-size:96px;margin:28px 0}
@@ -188,6 +223,7 @@ body{font-family:'Noto Sans Thai',system-ui,sans-serif;color:var(--ink);backgrou
 <div class="app">
 
 <div class="splash photo" id="splash">
+  <div class="fx" aria-hidden="true"><i class="cloud c1"></i><i class="cloud c2"></i><i class="hrt" style="left:14%;animation-delay:0s">♡</i><i class="hrt" style="left:78%;animation-delay:1.6s">♡</i><i class="hrt" style="left:34%;animation-delay:3.1s">♡</i><i class="hrt" style="left:64%;animation-delay:4.4s">♡</i><i class="hrt" style="left:88%;animation-delay:5.6s">♡</i><i class="spk" style="left:12%;top:10%;animation-delay:0s">✦</i><i class="spk" style="left:86%;top:14%;animation-delay:0.7s">✦</i><i class="spk" style="left:20%;top:34%;animation-delay:1.3s">✦</i><i class="spk" style="left:80%;top:40%;animation-delay:2s">✦</i><i class="spk" style="left:50%;top:6%;animation-delay:1s">✦</i><i class="spk" style="left:92%;top:58%;animation-delay:1.8s">✦</i><i class="note" style="animation-delay:0s">♪</i><i class="note" style="animation-delay:1.5s">♪</i><i class="note" style="animation-delay:3s">♪</i></div>
   <div class="brand">
     <div class="mon">Mon</div>
     <div class="per">PERSONAL</div>
@@ -792,6 +828,25 @@ function route() {
   document.querySelectorAll('.view').forEach(x => x.classList.toggle('active', x === v));
   document.querySelectorAll('.tabbar a').forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + (name === 'settings' ? 'profile' : name)));
   if (name === 'chat') msgs.scrollTop = msgs.scrollHeight;
+  fxView(v);
+}
+// 24 ต.ค. ลูกเล่นในแอป: การ์ดเด้งเข้าทีละใบ + ยอดเงินวิ่งนับขึ้น (เบา ๆ ใช้ transform/opacity)
+const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+function fxView(v) {
+  if (calm) return;
+  v.querySelectorAll('.card').forEach((c, i) => {
+    c.classList.remove('fx-in'); void c.offsetWidth;
+    c.style.animationDelay = Math.min(i, 8) * 55 + 'ms'; c.classList.add('fx-in');
+  });
+  v.querySelectorAll('#hMonth,#mTotal').forEach(countUp);
+}
+function countUp(el) {
+  const to = Number((el.dataset.to || (el.dataset.to = el.textContent.replace(/[^\d.]/g, ''))) || 0);
+  if (!to) return;
+  const t0 = performance.now(), dur = 900;
+  const step = t => { const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+    el.textContent = baht(k < 1 ? Math.round(to * e) : to); if (k < 1) requestAnimationFrame(step); };
+  requestAnimationFrame(step);
 }
 addEventListener('hashchange', route);
 route();
@@ -859,13 +914,20 @@ async function boot() {
       start(data);
     } catch (err) {
       msg.textContent = 'รหัสไม่ถูก ลองใหม่';
+      const lf = $('#lockForm'); lf.classList.remove('shake'); void lf.offsetWidth; lf.classList.add('shake');
       pw.value = ''; pw.focus();   // ล้างให้พิมพ์ใหม่ได้เลย
     }
     busy = false;
   };
   $('#lockForm').addEventListener('submit', e => { e.preventDefault(); tryOpen(); });
   // 24 ต.ค.: พิมพ์ครบ 6 ตัว = เปิดเอง ไม่ต้องกด ›
-  $('#lockPw').addEventListener('input', () => { if ($('#lockPw').value.length >= 6) tryOpen(); });
+  $('#lockPw').addEventListener('input', () => {
+    const f = $('#lockForm').getBoundingClientRect(), sp = $('#splash').getBoundingClientRect(), h = document.createElement('i');
+    h.className = 'pop-h'; h.textContent = '♥';
+    h.style.left = (f.left - sp.left + f.width * (0.2 + Math.random() * 0.6)) + 'px'; h.style.top = (f.top - sp.top - 6) + 'px';
+    $('#splash').appendChild(h); setTimeout(() => h.remove(), 950);
+    if ($('#lockPw').value.length >= 6) tryOpen();
+  });
 }
 boot();
 
