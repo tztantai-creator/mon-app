@@ -91,6 +91,11 @@ body{font-family:'Noto Sans Thai',system-ui,sans-serif;color:var(--ink);backgrou
 .splash .cat{font-size:96px;margin:28px 0}
 .splash.photo{background:#7fb3ec url(splash.jpg) center top/cover no-repeat;justify-content:flex-end;padding-bottom:calc(48px + env(safe-area-inset-bottom))}
 .splash.photo button{background:rgba(255,255,255,.92);padding:16px 72px}
+.brand #lockForm{width:min(260px,78vw);margin:22px auto 0;display:flex;gap:6px;padding:5px;border-radius:99px;background:rgba(255,255,255,.35);border:1px solid rgba(255,255,255,.7);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:0 6px 18px rgba(29,80,160,.25);text-shadow:none}
+.brand #lockPw{flex:1;min-width:0;border:0;border-radius:99px;padding:10px 14px;font:inherit;font-size:16px;color:#1d3557;text-align:center;background:rgba(255,255,255,.9);-webkit-appearance:none;letter-spacing:2px}
+.brand #lockPw::placeholder{letter-spacing:0;color:#7a8aa3}
+.brand #lockForm button{flex:none;width:42px;height:42px;padding:0;border:0;border-radius:50%;background:#2f7de1;color:#fff;font:700 22px/1 sans-serif;box-shadow:none;cursor:pointer}
+.brand #lockMsg{margin:8px 0 0;min-height:1.3em;font-size:14px;font-weight:600}
 .brand{position:absolute;top:calc(56px + env(safe-area-inset-top));left:0;right:0;text-align:center;color:#fff;text-shadow:0 2px 12px rgba(29,80,160,.45)}
 .brand .mon{font-family:'Caveat Brush',cursive;font-size:96px;line-height:.9;transform:rotate(-4deg)}
 .brand .per{font-family:'Fredoka','Noto Sans Thai',sans-serif;font-weight:600;font-size:30px;letter-spacing:3px;margin-top:2px}
@@ -188,8 +193,13 @@ body{font-family:'Noto Sans Thai',system-ui,sans-serif;color:var(--ink);backgrou
     <div class="per">PERSONAL</div>
     <div class="sub">Your Personal CEO &amp; Chief of Staff</div>
     <div class="say">ทุกเป้าหมาย…<br>เราจะไปด้วยกัน ♡</div>
+    <form id="lockForm" style="display:none">
+      <input id="lockPw" type="password" inputmode="numeric" placeholder="ใส่รหัส 6 ตัว" autocomplete="current-password">
+      <button aria-label="เปิด">›</button>
+    </form>
+    <p id="lockMsg"></p>
   </div>
-  <button onclick="hideSplash()">เริ่มต้น ›</button>
+  <button id="splashGo" onclick="hideSplash()">เริ่มต้น ›</button>
 </div>
 
 <!-- HOME -->
@@ -357,15 +367,7 @@ body{font-family:'Noto Sans Thai',system-ui,sans-serif;color:var(--ink);backgrou
 </nav>
 </div>
 
-<div class="splash" id="lock" style="display:none;z-index:11">
-  <div class="logo">MON<small>PERSONAL</small></div>
-  <div class="cat">🔒</div>
-  <form id="lockForm" style="width:100%;max-width:280px">
-    <input id="lockPw" type="password" placeholder="รหัสผ่าน" autocomplete="current-password" style="width:100%;border:0;border-radius:99px;padding:14px 20px;font:inherit;font-size:16px;margin-bottom:14px;color:#1d3557">
-    <button style="width:100%">เปิด</button>
-  </form>
-  <p id="lockMsg" style="margin-top:14px;min-height:1.5em"></p>
-</div>
+<!-- 24 ต.ค.: หน้าใส่รหัสรวมกับหน้าแมวแล้ว (ช่องรหัสอยู่ใน #splash) -->
 
 <script src="data.js"></script>
 <script>
@@ -824,12 +826,13 @@ if (store.get('mon-seen')) $('#splash').style.display = 'none';
 
 async function boot() {
   if (window.MON_DATA) return start(window.MON_DATA);
-  const lock = $('#lock'), msg = $('#lockMsg');
+  const msg = $('#lockMsg'), sp = $('#splash');
+  const askPw = () => { sp.style.display = ''; sp.classList.remove('hide'); $('#splashGo').style.display = 'none'; $('#lockForm').style.display = 'flex'; };
   let enc;
   try {
     enc = await (await fetch('data.enc.json', {cache: 'no-store'})).json();
   } catch (e) {
-    lock.style.display = 'flex'; $('#lockForm').style.display = 'none';
+    askPw(); $('#lockForm').style.display = 'none';
     msg.textContent = 'โหลดข้อมูลไม่ได้ ลองต่อเน็ตแล้วเปิดใหม่';
     return;
   }
@@ -843,7 +846,7 @@ async function boot() {
       }
     } catch (e) {}
   }
-  lock.style.display = 'flex';
+  askPw();
   $('#lockForm').addEventListener('submit', async e => {
     e.preventDefault();
     msg.textContent = 'กำลังเปิด…';
@@ -851,7 +854,7 @@ async function boot() {
       const key = await keyFromPassword($('#lockPw').value, enc);
       const data = await decryptData(enc, key);
       store.set('mon-key', JSON.stringify({salt: enc.salt, k: toB64(await crypto.subtle.exportKey('raw', key))}));
-      lock.style.display = 'none';
+      $('#lockPw').blur(); hideSplash();
       start(data);
     } catch (err) {
       msg.textContent = 'รหัสไม่ถูก';
