@@ -92,7 +92,7 @@ body{font-family:'Noto Sans Thai',system-ui,sans-serif;color:var(--ink);backgrou
 .splash.photo{background:#7fb3ec url(splash.jpg) center top/cover no-repeat;justify-content:flex-end;padding-bottom:calc(48px + env(safe-area-inset-bottom))}
 .splash.photo button{background:rgba(255,255,255,.92);padding:16px 72px}
 .brand #lockForm{width:min(260px,78vw);margin:22px auto 0;display:flex;gap:6px;padding:5px;border-radius:99px;background:rgba(255,255,255,.35);border:1px solid rgba(255,255,255,.7);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:0 6px 18px rgba(29,80,160,.25);text-shadow:none}
-.brand #lockPw{flex:1;min-width:0;border:0;border-radius:99px;padding:10px 14px;font:inherit;font-size:16px;color:#1d3557;text-align:center;background:rgba(255,255,255,.9);-webkit-appearance:none;letter-spacing:2px}
+.brand #lockPw{flex:1;min-width:0;border:0;border-radius:99px;padding:11px 14px;font:inherit;font-size:16px;color:#1d3557;text-align:center;background:rgba(255,255,255,.9);-webkit-appearance:none;letter-spacing:2px}
 .brand #lockPw::placeholder{letter-spacing:0;color:#7a8aa3}
 .brand #lockForm button{flex:none;width:42px;height:42px;padding:0;border:0;border-radius:50%;background:#2f7de1;color:#fff;font:700 22px/1 sans-serif;box-shadow:none;cursor:pointer}
 .brand #lockMsg{margin:8px 0 0;min-height:1.3em;font-size:14px;font-weight:600}
@@ -194,8 +194,7 @@ body{font-family:'Noto Sans Thai',system-ui,sans-serif;color:var(--ink);backgrou
     <div class="sub">Your Personal CEO &amp; Chief of Staff</div>
     <div class="say">ทุกเป้าหมาย…<br>เราจะไปด้วยกัน ♡</div>
     <form id="lockForm" style="display:none">
-      <input id="lockPw" type="password" inputmode="numeric" placeholder="ใส่รหัส 6 ตัว" autocomplete="current-password">
-      <button aria-label="เปิด">›</button>
+      <input id="lockPw" type="password" inputmode="numeric" placeholder="ใส่รหัส 6 ตัว" maxlength="6" autocomplete="current-password">
     </form>
     <p id="lockMsg"></p>
   </div>
@@ -847,19 +846,26 @@ async function boot() {
     } catch (e) {}
   }
   askPw();
-  $('#lockForm').addEventListener('submit', async e => {
-    e.preventDefault();
-    msg.textContent = 'กำลังเปิด…';
+  let busy = false;
+  const tryOpen = async () => {
+    const pw = $('#lockPw');
+    if (busy || !pw.value) return;
+    busy = true; msg.textContent = 'กำลังเปิด…';
     try {
-      const key = await keyFromPassword($('#lockPw').value, enc);
+      const key = await keyFromPassword(pw.value, enc);
       const data = await decryptData(enc, key);
       store.set('mon-key', JSON.stringify({salt: enc.salt, k: toB64(await crypto.subtle.exportKey('raw', key))}));
-      $('#lockPw').blur(); hideSplash();
+      pw.blur(); hideSplash();
       start(data);
     } catch (err) {
-      msg.textContent = 'รหัสไม่ถูก';
+      msg.textContent = 'รหัสไม่ถูก ลองใหม่';
+      pw.value = ''; pw.focus();   // ล้างให้พิมพ์ใหม่ได้เลย
     }
-  });
+    busy = false;
+  };
+  $('#lockForm').addEventListener('submit', e => { e.preventDefault(); tryOpen(); });
+  // 24 ต.ค.: พิมพ์ครบ 6 ตัว = เปิดเอง ไม่ต้องกด ›
+  $('#lockPw').addEventListener('input', () => { if ($('#lockPw').value.length >= 6) tryOpen(); });
 }
 boot();
 
