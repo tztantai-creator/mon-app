@@ -98,10 +98,13 @@ body{font-family:'Noto Sans Thai',system-ui,sans-serif;color:var(--ink);backgrou
 .splash.photo.hide{transform:translateY(-6%) scale(1.06)}
 .fx{position:absolute;top:0;right:0;bottom:0;left:0;pointer-events:none;overflow:hidden;z-index:0}
 .splash .brand,.splash>button{z-index:1}
-.fx .cloud{position:absolute;width:150px;height:46px;border-radius:99px;background:rgba(255,255,255,.55);filter:blur(6px);animation:drift 38s linear infinite}
-.fx .cloud.c2{top:44%;width:110px;height:34px;opacity:.7;animation-duration:52s;animation-delay:-20s}
-.fx .cloud.c1{top:21%;animation-delay:-8s}
-@keyframes drift{from{transform:translateX(-180px)}to{transform:translateX(520px)}}
+.fx .cloud{position:absolute;top:3%;width:84px;height:24px;border-radius:99px;background:#fff;opacity:.9;box-shadow:0 4px 10px rgba(29,80,160,.12);animation:drift 46s linear infinite}
+.fx .cloud::before,.fx .cloud::after{content:"";position:absolute;background:#fff;border-radius:50%}
+.fx .cloud::before{width:34px;height:34px;left:14px;top:-17px}
+.fx .cloud::after{width:24px;height:24px;left:42px;top:-10px}
+.fx .cloud.c1{animation-delay:-14s}
+.fx .cloud.c2{top:57%;opacity:.75;animation-duration:60s;animation-delay:-35s}
+@keyframes drift{from{transform:translateX(-120px)}to{transform:translateX(110vw)}}
 .fx .hrt{position:absolute;bottom:18%;color:#fff;font-size:18px;opacity:0;animation:rise 7s ease-in infinite;text-shadow:0 0 8px rgba(255,255,255,.8)}
 @keyframes rise{0%{opacity:0;transform:translate(0,0) scale(.6)}15%{opacity:.95}100%{opacity:0;transform:translate(18px,-260px) scale(1.15) rotate(12deg)}}
 .fx .spk{position:absolute;color:#fff;font-size:14px;animation:twk 2.8s ease-in-out infinite;text-shadow:0 0 10px #fff}
@@ -135,7 +138,7 @@ body{font-family:'Noto Sans Thai',system-ui,sans-serif;color:var(--ink);backgrou
 .brand .mon{font-family:'Caveat Brush',cursive;font-size:96px;line-height:.9;transform:rotate(-4deg);text-shadow:0 3px 0 rgba(29,80,160,.25),0 6px 22px rgba(29,80,160,.5)}
 .brand .per{font-family:'Fredoka','Noto Sans Thai',sans-serif;font-weight:600;font-size:30px;letter-spacing:3px;margin-top:2px}
 .brand .sub{font-size:14px;margin-top:6px;opacity:.95}
-.brand .say{font-family:'Mali','Noto Sans Thai',sans-serif;font-weight:500;font-size:17px;line-height:1.45;margin-top:16px;opacity:.95;transform:rotate(-1.5deg);text-shadow:0 1px 2px rgba(20,60,130,.6),0 0 8px rgba(20,60,130,.3)}
+.brand .say{font-family:'Mali','Noto Sans Thai',sans-serif;font-weight:500;font-size:17px;line-height:1.45;margin-top:16px;opacity:.95;transform:rotate(-1.5deg)}
 .avatar img,.mascot img{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block}
 .mascot img{border:3px solid #fff;box-shadow:0 4px 14px rgba(61,139,242,.25)}
 /* เที่ยว */
