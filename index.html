@@ -68,6 +68,8 @@ body{font-family:'Noto Sans Thai',system-ui,sans-serif;color:var(--ink);backgrou
 #msgs{flex:1;overflow-y:auto;display:flex;flex-direction:column;padding:4px 0 12px}
 .bubble{max-width:82%;padding:10px 14px;border-radius:18px;font-size:14px;line-height:1.55;white-space:pre-line}
 .bubble.mon{background:#fff;align-self:flex-start;border-top-left-radius:6px;box-shadow:0 3px 10px rgba(61,139,242,.1)}
+.bubble{word-break:break-word}
+.bubble.typing{color:var(--muted);font-style:italic}
 .bubble.me{background:var(--blue);color:#fff;align-self:flex-end;border-top-right-radius:6px}
 .quick{display:flex;overflow-x:auto;padding-bottom:8px}
 .quick button{border:1px solid var(--line);background:#fff;border-radius:99px;padding:6px 12px;font:inherit;font-size:12px;color:var(--blue);white-space:nowrap;cursor:pointer}
@@ -232,12 +234,12 @@ body{font-family:'Noto Sans Thai',system-ui,sans-serif;color:var(--ink);backgrou
 
 <!-- CHAT -->
 <section class="view" id="v-chat">
-  <div class="head"><a class="back" href="#home">‹</a><div class="avatar">🐱</div><div><h1 style="font-size:18px">Mon</h1><small>Personal CEO · ตอบจากข้อมูลในเครื่อง</small></div></div>
+  <div class="head"><a class="back" href="#home">‹</a><div class="avatar">🐱</div><div><h1 style="font-size:18px">Mon</h1><small id="chatSub">Personal CEO</small></div></div>
   <div id="msgs"></div>
   <div class="quick">
-    <button>เดือนนี้ใช้ไปกี่บาท</button><button>มีนัดอะไรบ้าง</button><button>สมาชิกอะไรจะตัดเงิน</button><button>ใช้กับ AI ไปเท่าไหร่</button><button>บัญชี SCB เดือนนี้</button><button>กินอะไรไปบ้าง</button>
+    <button>เดือนนี้ใช้ไปกี่บาท</button><button>มีนัดอะไรบ้าง</button><button>สมาชิกอะไรจะตัดเงิน</button><button>ใช้กับ AI ไปเท่าไหร่</button><button>บัญชี SCB เดือนนี้</button><button>กินอะไรไปบ้าง</button><button>บันทึก: </button>
   </div>
-  <form id="chatForm"><input id="chatInput" placeholder="พิมพ์ข้อความ…" autocomplete="off"><button aria-label="ส่ง">➤</button></form>
+  <form id="chatForm"><input id="chatInput" placeholder="ถาม หรือบันทึก เช่น กินข้าว 50 บาท" autocomplete="off"><button aria-label="ส่ง">➤</button></form>
 </section>
 
 <!-- MONEY -->
@@ -720,14 +722,50 @@ function answer(q) {
     const m = (D.bank_months || [])[0];
     return m ? `บัญชี SCB ${m.label}: รายจ่าย ${baht(m.expense)} · โอน ${baht(m.transfer)} (${m.n} รายการ)\nยังไม่รู้ประเภท ${D.bank_unknown} รายการ` : 'ยังไม่มีข้อมูลธนาคารครับ';
   }
-  return 'ในแอปนี้ Mon ตอบได้เรื่อง ค่าใช้จ่าย นัด และสมาชิกรายเดือนครับ\nถ้าจะบันทึกหรือสั่งงาน ส่งหา Mon ทาง Telegram ได้เลย';
+  return null;
 }
 const msgs = $('#msgs');
-function say(t, who) { const d = document.createElement('div'); d.className = 'bubble ' + who; d.textContent = t; msgs.appendChild(d); msgs.scrollTop = msgs.scrollHeight; }
-function ask(t) { say(t, 'me'); setTimeout(() => say(answer(t), 'mon'), 400); }
+function say(t, who) { const d = document.createElement('div'); d.className = 'bubble ' + who; d.textContent = t; msgs.appendChild(d); msgs.scrollTop = msgs.scrollHeight; return d; }
+
+// ต่อบอท Mon จริง: เปิดจาก Mac (Wi-Fi) ใช้ api/chat ที่เดียวกัน · เปิดจากเว็บใช้ที่อยู่ tunnel ที่อยู่ในข้อมูลที่ล็อกรหัส
+const API = window.MON_DATA ? 'api/chat' : D.api;
+const isNote = t => /^\s*บันทึก/.test(t) || (/\d[\d,.]*\s*(บาท|฿)|฿\s*\d/.test(t) && !/\?|ไหม/.test(t));
+$('#chatSub').textContent = API ? 'ต่อกับบอท Mon แล้ว · บันทึกได้ ถามได้' : 'ตอบจากข้อมูลในเครื่อง';
+const sendMon = t => fetch(API, {method: 'POST', headers: {'Content-Type': 'text/plain'}, body: JSON.stringify({text: t})})
+  .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); });
+let outbox = [];
+try { outbox = JSON.parse(store.get('mon-outbox') || '[]'); } catch (e) {}
+const saveOutbox = () => store.set('mon-outbox', JSON.stringify(outbox));
+function ask(t) {
+  say(t, 'me');
+  const local = isNote(t) ? null : answer(t);
+  if (local) { setTimeout(() => say(local, 'mon'), 300); return; }
+  if (!API) {
+    if (isNote(t)) { outbox.push(t); saveOutbox(); }
+    setTimeout(() => say(isNote(t) ? 'ตอนนี้แอปยังไม่ได้ต่อกับ Mon เก็บไว้ในเครื่องแล้ว จะส่งให้ Mon เมื่อต่อได้ครับ'
+      : 'ข้อนี้ต้องถาม Mon ตัวจริง แต่แอปยังไม่ได้ต่อกับ Mon · ส่งหา Mon ทาง Telegram ได้เลยครับ', 'mon'), 300);
+    return;
+  }
+  const wait = say('Mon กำลังพิมพ์…', 'mon typing');
+  sendMon(t).then(r => { wait.remove(); say(r.reply, 'mon'); }).catch(() => {
+    wait.remove();
+    if (isNote(t)) { outbox.push(t); saveOutbox(); say('ติดต่อ Mac ไม่ได้ (ปิดหรือหลับอยู่) เก็บไว้ในเครื่องแล้ว จะส่งให้ Mon เองเมื่อ Mac เปิดครับ', 'mon'); }
+    else say('ติดต่อ Mon ไม่ได้ตอนนี้ (Mac ปิดหรือหลับอยู่) ลองใหม่ภายหลังครับ', 'mon');
+  });
+}
+// ส่งบันทึกที่ค้างไว้ตอน Mac ปิด
+(function flush() {
+  if (!API || !outbox.length) return;
+  const t = outbox[0];
+  sendMon(t).then(() => { outbox.shift(); saveOutbox(); if (!outbox.length) toast('ส่งบันทึกที่ค้างไว้ให้ Mon แล้ว'); else flush(); }).catch(() => {});
+})();
 say(`สวัสดีครับ ${D.owner || ''}\nวันนี้มีอะไรให้ Mon ช่วยไหมครับ? 😊`, 'mon');
 $('#chatForm').addEventListener('submit', e => { e.preventDefault(); const t = $('#chatInput').value.trim(); if (t) { $('#chatInput').value = ''; ask(t); } });
-document.querySelector('.quick').addEventListener('click', e => { if (e.target.tagName === 'BUTTON') ask(e.target.textContent); });
+document.querySelector('.quick').addEventListener('click', e => {
+  if (e.target.tagName !== 'BUTTON') return;
+  const t = e.target.textContent;
+  if (/:\s*$/.test(t)) { $('#chatInput').value = t; $('#chatInput').focus(); } else ask(t);
+});
 
 // router
 function route() {
