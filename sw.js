@@ -1,7 +1,7 @@
 // เก็บแอป + ข้อมูลชุดล่าสุดไว้ในมือถือ: Mac ปิดก็ยังเปิดดูได้ (ทำงานเฉพาะลิงก์ https ของ Tailscale)
-const CACHE = 'mon-v2';
+const CACHE = 'mon-v4';
 // data.js มีเฉพาะบน Mac · data.enc.json มีเฉพาะบน GitHub Pages → ไฟล์ไหนไม่มีก็ข้าม
-const SHELL = ['./', 'index.html', 'manifest.json', 'apple-touch-icon.png', 'icon-192.png', 'icon-512.png', 'data.js', 'data.enc.json'];
+const SHELL = ['./', 'index.html', 'manifest.json', 'apple-touch-icon.png', 'icon-192.png', 'icon-512.png', 'splash.jpg', 'mon-cat.jpg', 'data.js', 'data.enc.json'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE)

@@ -85,6 +85,26 @@ body{font-family:'Noto Sans Thai',system-ui,sans-serif;color:var(--ink);backgrou
 .splash .logo{font-size:52px;font-weight:700;letter-spacing:2px;line-height:1}
 .splash .logo small{display:block;font-size:22px;letter-spacing:6px;margin-top:6px}
 .splash .cat{font-size:96px;margin:28px 0}
+.splash.photo{background:#7fb3ec url(splash.jpg) center top/cover no-repeat;justify-content:flex-end;padding-bottom:calc(48px + env(safe-area-inset-bottom))}
+.splash.photo button{background:rgba(255,255,255,.92);padding:16px 72px}
+.avatar img,.mascot img{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block}
+.mascot img{border:3px solid #fff;box-shadow:0 4px 14px rgba(61,139,242,.25)}
+/* เที่ยว */
+.trip-hero{position:relative;height:210px;border-radius:24px;overflow:hidden;background:#8cc4ff center/cover no-repeat;color:#fff;margin-bottom:14px;box-shadow:0 10px 24px rgba(29,53,87,.22);cursor:pointer}
+.trip-hero .shade{position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(180deg,rgba(0,0,0,0) 35%,rgba(16,40,80,.72))}
+.trip-hero .info{position:absolute;left:18px;right:18px;bottom:16px}
+.trip-hero h2{font-size:24px;line-height:1.2}
+.trip-hero p{font-size:13px;opacity:.95}
+.trip-hero .bar{display:flex;align-items:center;margin-top:10px;font-size:12px}
+.trip-hero .bar div{flex:1;height:6px;border-radius:99px;background:rgba(255,255,255,.35);margin-right:10px;overflow:hidden}
+.trip-hero .bar i{display:block;height:100%;background:#fff;border-radius:99px}
+.trip-hero .swap{position:absolute;top:12px;right:12px;font-size:11px;background:rgba(0,0,0,.3);padding:4px 10px;border-radius:99px}
+.thumb{width:44px;height:44px;border-radius:12px;flex:none;background:var(--blue-soft) center/cover no-repeat}
+.field{width:100%;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font:inherit;font-size:15px;margin-bottom:8px;background:#fff;color:var(--ink);-webkit-appearance:none}
+.pair{display:flex}.pair>*+*{margin-left:8px}
+.pair label{flex:1;font-size:12px;color:var(--muted)}
+.btn{width:100%;border:0;border-radius:99px;background:var(--blue);color:#fff;font:inherit;font-weight:700;padding:12px;cursor:pointer}
+.del{border:0;background:none;color:var(--muted);font-size:18px;cursor:pointer;padding:4px}
 .splash button{border:0;background:#fff;color:var(--blue);font:inherit;font-weight:700;padding:14px 56px;border-radius:99px;font-size:16px;cursor:pointer;box-shadow:0 8px 20px rgba(29,53,87,.2)}
 /* ระยะห่างแบบ margin ให้ iPhone รุ่นเก่า (iOS 12) */
 .head>*+*,.row>*+*{margin-left:12px}
@@ -96,34 +116,86 @@ body{font-family:'Noto Sans Thai',system-ui,sans-serif;color:var(--ink);backgrou
 #chatForm button{margin-left:8px;flex:none}
 .tabbar a b{margin-bottom:2px}
 .foot{font-size:11px;color:var(--muted);text-align:center;margin-top:6px}
+/* Mon พูด: แมวประจำแอป + คำแนะนำจากข้อมูลจริง (แตะเพื่อดูข้อถัดไป) */
+.refresh{width:40px;height:40px;border-radius:50%;border:0;background:#fff;color:var(--blue);font-size:20px;box-shadow:0 3px 10px rgba(61,139,242,.18);cursor:pointer}
+.mon-say{display:flex;align-items:flex-end;margin:-4px 0 14px}
+.mascot{width:76px;height:76px;flex:none}
+.mascot svg{width:76px;height:76px;display:block}
+.lid{animation:blink 5s infinite}
+@keyframes blink{0%,94%,100%{opacity:0}96%{opacity:1}}
+.tip{flex:1;margin:0 0 18px 10px;position:relative;text-align:left;border:0;background:#fff;border-radius:18px 18px 18px 4px;padding:12px 14px;font:inherit;font-size:14px;line-height:1.5;color:var(--ink);box-shadow:0 6px 18px rgba(61,139,242,.14);cursor:pointer;min-height:48px}
+.tip small{display:block;color:var(--muted);font-size:11px;margin-top:4px}
+.tip.swap{animation:pop .3s ease}
+@keyframes pop{from{transform:scale(.96);opacity:.4}to{transform:none;opacity:1}}
+.budget{display:flex;align-items:center}
+.budget>*+*{margin-left:16px}
+.ring{width:112px;height:112px;flex:none;position:relative}
+.ring svg{width:112px;height:112px;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:12;stroke-linecap:round}
+.ring .val{transition:stroke-dashoffset 1.1s cubic-bezier(.2,.8,.2,1)}
+.ring .mid{position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:20px;font-weight:700}
+.ring .mid small{font-size:11px;font-weight:400;color:var(--muted)}
+.big.mid-size{font-size:24px}
+.strong{color:var(--ink);font-weight:500;margin-top:4px}
+.link{border:0;background:none;color:var(--blue);font:inherit;font-size:13px;padding:6px 0 0;cursor:pointer}
+.strip{display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;margin:4px -4px 0;padding:2px 4px 4px}
+.strip>*+*{margin-left:10px}
+.day{flex:none;width:96px;background:#fff;border-radius:16px;padding:10px;text-align:center;border:1px solid var(--line)}
+.day b{display:block;font-size:24px;line-height:1.1;color:var(--blue)}
+.day .m{font-size:11px;color:var(--muted)}
+.day .t{font-size:12px;margin-top:6px;line-height:1.3;height:31px;overflow:hidden}
+.day .a{font-size:12px;font-weight:700;margin-top:2px}
+.day.warn b{color:var(--red)}
+.subs-sum{display:flex;align-items:center;cursor:pointer;font-size:14px}
+.subs-sum>*+*{margin-left:12px}
+.subs-sum small{display:block;color:var(--muted);font-size:12px}
+.chev{font-size:22px;color:var(--muted)}
+.donut{display:flex;align-items:center;margin-bottom:6px}
+.donut svg{width:120px;height:120px;flex:none;transform:rotate(-90deg)}
+.donut circle{fill:none;stroke-width:22}
+.legend{margin-left:14px;font-size:13px;line-height:1.9}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:0}
+@media (prefers-reduced-motion:reduce){.lid,.tip.swap,.view.active{animation:none}.ring .val{transition:none}}
 </style>
 </head>
 <body>
 <div class="app">
 
-<div class="splash" id="splash">
-  <div class="logo">MON<small>PERSONAL</small></div>
-  <p style="margin-top:10px;opacity:.9">Your Personal CEO &amp; Chief of Staff</p>
-  <div class="cat">🐱</div>
-  <p style="margin-bottom:28px">ทุกเป้าหมาย… เราจะไปด้วยกัน ♡</p>
-  <button onclick="document.getElementById('splash').classList.add('hide')">เริ่มต้น ›</button>
+<div class="splash photo" id="splash">
+  <button onclick="hideSplash()">เริ่มต้น ›</button>
 </div>
 
 <!-- HOME -->
 <section class="view" id="v-home">
   <div class="head">
-    <div><h1>สวัสดี <span id="ownerName"></span> 👋</h1><small id="today"></small></div>
-    <div class="sp"></div><div class="avatar">🧑🏻</div>
+    <div><h1><span id="hello"></span> <span id="ownerName"></span></h1><small id="today"></small></div>
+    <div class="sp"></div><button class="refresh" onclick="location.reload()" aria-label="โหลดข้อมูลใหม่">↻</button>
   </div>
-  <div class="hero">
-    <div class="card"><div class="note">ใช้ไปเดือนนี้</div><div class="big" id="hMonth"></div><div class="note" id="hMonthCmp"></div></div>
-    <div class="card"><div class="note">สมาชิกรายเดือน</div><div class="big" id="hSubs"></div><div class="note" id="hSubsN"></div></div>
+  <div class="mon-say">
+    <div class="mascot" id="mascot"></div>
+    <button class="tip" id="tip" aria-live="polite"></button>
   </div>
+  <div class="card budget">
+    <div class="ring" id="ring"></div>
+    <div class="grow">
+      <div class="note">ใช้ไปเดือนนี้</div>
+      <div class="big" id="hMonth"></div>
+      <div class="note" id="hMonthCmp"></div>
+      <div class="note strong" id="hDaily"></div>
+      <button class="link" id="setBudget"></button>
+    </div>
+  </div>
+  <div class="card"><h2>30 วันข้างหน้า <span id="nextTotal"></span></h2><div class="strip" id="next30"></div></div>
   <div class="card"><h2>วันนี้ต้องทำ <span id="todoN"></span></h2><div id="todo"></div></div>
+  <div class="card subs-sum" onclick="location.hash='#subs'">
+    <span class="ic">🔁</span>
+    <div class="grow">สมาชิกรายเดือน <b id="hSubs"></b><small id="hSubsN"></small></div>
+    <span class="chev">›</span>
+  </div>
   <div class="card">
     <div class="grid">
       <a href="#chat"><div class="tile" style="background:#e3f0ff">💬</div>คุยกับ Mon</a>
-      <a href="#profile"><div class="tile" style="background:#efe8ff">👤</div>โปรไฟล์</a>
+      <a href="#travel"><div class="tile" style="background:#e6f6ff">✈️</div>เที่ยว</a>
       <a href="#money"><div class="tile" style="background:#e1f7ec">💰</div>Money</a>
       <a href="#subs"><div class="tile" style="background:#fff1dc">🔁</div>สมาชิก</a>
       <a href="#calendar"><div class="tile" style="background:#ffe7ee">📅</div>ปฏิทิน</a>
@@ -190,6 +262,23 @@ body{font-family:'Noto Sans Thai',system-ui,sans-serif;color:var(--ink);backgrou
   <div class="card"><h2>รายบริการ <span>เดือนนี้ · รวมที่บันทึก · รายเดือน</span></h2><div id="aiList"></div></div>
 </section>
 
+<!-- TRAVEL -->
+<section class="view" id="v-travel">
+  <div class="head"><a class="back" href="#home">‹</a><div><h1>Travel</h1><small>ทริปและการเดินทาง</small></div></div>
+  <div id="tripHero"></div>
+  <div class="card"><h2>ทริปทั้งหมด <span id="tripN"></span></h2><div id="tripList"></div></div>
+  <div class="card"><h2>เพิ่มทริป</h2>
+    <form id="tripForm">
+      <input class="field" id="tPlace" placeholder="ไปไหน เช่น ญี่ปุ่น, เชียงใหม่, Seoul" required>
+      <div class="pair"><label>วันไป<input class="field" id="tStart" type="date" required></label><label>วันกลับ<input class="field" id="tEnd" type="date" required></label></div>
+      <input class="field" id="tBudget" type="number" inputmode="numeric" placeholder="งบทริป (บาท) ไม่ใส่ก็ได้">
+      <button class="btn">บันทึกทริป</button>
+      <p class="note" id="tMsg" style="margin-top:8px"></p>
+    </form>
+  </div>
+  <p class="foot">ทริปเก็บในเครื่องนี้ · รูปสถานที่จาก Wikimedia Commons · แตะรูปเพื่อเปลี่ยน</p>
+</section>
+
 <!-- FOOD -->
 <section class="view" id="v-food">
   <div class="head"><a class="back" href="#home">‹</a><div><h1>อาหาร</h1><small id="foodSub"></small></div></div>
@@ -250,8 +339,163 @@ const diff = D.prev_month_total ? Math.round((D.month_total - D.prev_month_total
 const cmp = diff === null ? 'เดือนก่อนยังไม่มีข้อมูล' : (diff >= 0 ? '▲ ' : '▼ ') + Math.abs(diff) + '% จากเดือนก่อน';
 $('#hMonthCmp').textContent = cmp;
 $('#hSubs').textContent = baht(D.sub_monthly);
-$('#hSubsN').textContent = D.subscriptions.length + ' บริการ';
+$('#hSubsN').textContent = `${D.subscriptions.length} บริการ · ปีละประมาณ ${baht(Math.round(D.sub_monthly * 12))}`;
 $('#gen').textContent = 'ข้อมูลจาก Hermes · MON อัปเดต ' + (D.generated_at || '-');
+const hr = new Date().getHours();
+$('#hello').textContent = hr < 11 ? 'อรุณสวัสดิ์' : hr < 17 ? 'สวัสดีตอนบ่าย' : 'สวัสดีตอนเย็น';
+
+// งบเดือนนี้: ตั้งเองในเครื่อง (ไม่ส่งไปไหน) → วงแหวน + เหลือใช้ได้วันละเท่าไหร่
+const now = new Date(), dim = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+const daysLeft = dim - now.getDate() + 1;
+let budget = Number(store.get('mon-budget')) || 0;
+function renderBudget(animate) {
+  const spent = D.month_total, r = 46, C = 2 * Math.PI * r;
+  const pct = budget ? Math.min(spent / budget, 1) : now.getDate() / dim;
+  const over = budget && spent > budget;
+  const color = over ? 'var(--red)' : budget && spent / budget > now.getDate() / dim ? '#ffb02e' : 'var(--blue)';
+  $('#ring').innerHTML = `<svg viewBox="0 0 112 112"><circle cx="56" cy="56" r="${r}" stroke="var(--blue-soft)"/>
+    <circle class="val" cx="56" cy="56" r="${r}" stroke="${color}" stroke-dasharray="${C}" stroke-dashoffset="${animate ? C : C * (1 - pct)}"/></svg>
+    <div class="mid">${budget ? Math.round(spent * 100 / budget) + '%' : now.getDate() + '/' + dim}<small>${budget ? 'ของงบ' : 'วันของเดือน'}</small></div>`;
+  if (animate) setTimeout(() => { const v = $('#ring .val'); if (v) v.style.strokeDashoffset = C * (1 - pct); }, 60);
+  $('#hDaily').textContent = !budget ? '' : over ? `เกินงบ ${baht(spent - budget)}`
+    : `เหลือ ${baht(budget - spent)} · ใช้ได้วันละ ${baht(Math.floor((budget - spent) / daysLeft))} อีก ${daysLeft} วัน`;
+  $('#setBudget').textContent = budget ? `งบเดือนนี้ ${baht(budget)} · แก้` : 'ตั้งงบเดือนนี้';
+}
+$('#setBudget').addEventListener('click', () => {
+  const v = prompt('งบใช้จ่ายต่อเดือน (บาท)', budget || '');
+  if (v === null) return;
+  budget = Math.max(0, Number(String(v).replace(/[^\d.]/g, '')) || 0);
+  store.set('mon-budget', budget);
+  renderBudget(false); renderTips();
+});
+renderBudget(true);
+
+// 30 วันข้างหน้า: นัด + วันตัดเงินสมาชิก
+const next = D.events.map(e => ({d: e.start, t: e.title, a: null}))
+  .concat(D.subscriptions.filter(s => s.renewal).map(s => ({d: s.renewal, t: s.name, a: s.price})))
+  .filter(x => daysTo(x.d) >= -14 && daysTo(x.d) <= 30).sort((a, b) => a.d < b.d ? -1 : 1);
+const nextSum = next.filter(x => daysTo(x.d) >= 0).reduce((s, x) => s + (x.a || 0), 0);
+$('#nextTotal').textContent = nextSum ? 'จะตัดเงิน ' + baht(nextSum) : '';
+$('#next30').innerHTML = next.map(x => {
+  const d = new Date(x.d + 'T00:00:00'), late = daysTo(x.d) < 0;
+  return `<div class="day ${late ? 'warn' : ''}"><b>${d.getDate()}</b><div class="m">${late ? 'เลยกำหนด' : thDate(x.d).split(' ')[1] + ' · อีก ' + daysTo(x.d) + ' วัน'}</div>
+    <div class="t">${esc(x.t)}</div><div class="a">${x.a ? baht(x.a) : 'นัด'}</div></div>`;
+}).join('') || '<div class="empty">ไม่มีอะไรใน 30 วันนี้</div>';
+
+// Mon พูด: คำแนะนำจากข้อมูลจริง แตะเพื่อดูข้อถัดไป
+$('#mascot').innerHTML = '<img src="mon-cat.jpg" alt="">';
+let tips = [], tipAt = 0;
+function renderTips() {
+  tips = [];
+  const up = D.subscriptions.filter(s => s.renewal && daysTo(s.renewal) >= 0).sort((a, b) => a.renewal < b.renewal ? -1 : 1)[0];
+  if (up) tips.push([`อีก ${daysTo(up.renewal)} วัน ${up.name} จะตัดเงิน ${baht(up.price)}`, 'ถ้าไม่ใช้แล้ว ยกเลิกก่อนวันตัดเงิน']);
+  D.events.slice(0, 1).forEach(e => tips.push([`อย่าลืม ${e.title} ${thDate(e.start)}`, `อีก ${daysTo(e.start)} วัน`]));
+  if (budget && D.month_total <= budget) tips.push([`เดือนนี้ใช้ได้อีกวันละ ${baht(Math.floor((budget - D.month_total) / daysLeft))}`, `งบ ${baht(budget)} เหลือ ${daysLeft} วัน`]);
+  if (budget && D.month_total > budget) tips.push([`เดือนนี้เกินงบแล้ว ${baht(D.month_total - budget)}`, 'ลองดูหมวดที่ใช้เยอะในหน้า Money']);
+  const late = D.subscriptions.filter(s => s.renewal && daysTo(s.renewal) < 0);
+  if (late.length) tips.push([`${late.map(s => s.name).join(', ')} เลยวันต่ออายุแล้ว`, 'ยังใช้อยู่ไหม บอก Mon ใน Telegram ให้อัปเดต']);
+  const top = D.categories[0];
+  if (top) tips.push([`เดือนนี้จ่ายกับ${top.name}มากสุด ${top.pct}%`, baht(top.amount) + ' จาก ' + baht(D.month_total)]);
+  if (D.bank_unknown) tips.push([`มี ${D.bank_unknown} รายการในบัญชี SCB ที่ Mon ยังไม่รู้ว่าเป็นอะไร`, 'บอก Mon ใน Telegram ได้']);
+  tips.push([`สมาชิกรายเดือนรวมปีละประมาณ ${baht(Math.round(D.sub_monthly * 12))}`, `${D.subscriptions.length} บริการ`]);
+  tipAt = 0; showTip(false);
+}
+function showTip(swap) {
+  const t = tips[tipAt % tips.length], el = $('#tip');
+  el.innerHTML = `${esc(t[0])}<small>${esc(t[1])} · ${tipAt % tips.length + 1}/${tips.length}</small>`;
+  if (swap) { el.classList.remove('swap'); void el.offsetWidth; el.classList.add('swap'); }
+}
+$('#tip').addEventListener('click', () => { tipAt++; showTip(true); });
+renderTips();
+document.querySelectorAll('#v-chat .avatar').forEach(el => { el.innerHTML = $('#mascot').innerHTML; });
+
+// เที่ยว: ทริปเก็บในเครื่องนี้ · รูปสถานที่ค้นจาก Wikimedia Commons (ฟรี ไม่ต้องใช้คีย์)
+let trips = [];
+try { trips = JSON.parse(store.get('mon-trips') || '[]'); } catch (e) {}
+const saveTrips = () => store.set('mon-trips', JSON.stringify(trips));
+const todayIso = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 6e4).toISOString().slice(0, 10);
+
+async function findPhotos(place) {
+  let en = place;
+  try {
+    const r = await (await fetch('https://th.wikipedia.org/w/api.php?action=query&prop=langlinks&lllang=en&redirects=1&format=json&origin=*&titles=' + encodeURIComponent(place))).json();
+    const pg = Object.values(r.query.pages)[0];
+    if (pg.langlinks) en = pg.langlinks[0]['*'];
+  } catch (e) {}
+  const out = [];
+  // 1) รูปหลักของหน้า Wikipedia เมืองนั้น (ข้ามถ้าเป็นธง/แผนที่ .svg)
+  try {
+    const r = await (await fetch('https://en.wikipedia.org/w/api.php?action=query&prop=pageimages&piprop=thumbnail&pithumbsize=900&redirects=1&format=json&origin=*&titles=' + encodeURIComponent(en))).json();
+    const th = Object.values(r.query.pages)[0].thumbnail;
+    if (th && !/\.svg/i.test(th.source)) out.push(th.source);
+  } catch (e) {}
+  // 2) รูปวิวจาก Commons ที่ชื่อไฟล์มีชื่อสถานที่
+  const q = encodeURIComponent(`filetype:bitmap intitle:"${en}" landscape|view|skyline`);
+  const r = await (await fetch(`https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=${q}&gsrnamespace=6&gsrlimit=8&prop=imageinfo&iiprop=url&iiurlwidth=900&format=json&origin=*`)).json();
+  if (r.query) Object.values(r.query.pages).sort((a, b) => a.index - b.index).forEach(p => out.push(p.imageinfo[0].thumburl));
+  return out;
+}
+
+function tripState(t) {
+  const toStart = daysTo(t.start), toEnd = daysTo(t.end), len = daysTo(t.end) - daysTo(t.start) + 1;
+  if (toStart > 0) {
+    const total = Math.max(1, Math.round((new Date(t.start) - new Date(t.created)) / 864e5));
+    return {text: `อีก ${toStart} วัน`, pct: Math.min(100, Math.round((total - toStart) * 100 / total))};
+  }
+  if (toEnd >= 0) return {text: `กำลังเที่ยว วันที่ ${1 - toStart}/${len}`, pct: Math.round((1 - toStart) * 100 / len)};
+  return {text: 'เที่ยวแล้ว', pct: 100};
+}
+const tripDates = t => `${thDate(t.start)} – ${thDate(t.end)} ${new Date(t.start).getFullYear() + 543}`;
+const tripPhoto = t => t.photos && t.photos.length ? t.photos[(t.pi || 0) % t.photos.length] : '';
+
+function renderTrips() {
+  trips.sort((a, b) => a.start < b.start ? -1 : 1);
+  const hero = trips.filter(t => t.end >= todayIso)[0] || trips[trips.length - 1];
+  if (hero) {
+    const st = tripState(hero), ph = tripPhoto(hero);
+    $('#tripHero').innerHTML = `<div class="trip-hero" data-id="${hero.id}" style="${ph ? `background-image:url('${ph}')` : ''}">
+      <div class="shade"></div>${hero.photos && hero.photos.length > 1 ? '<span class="swap">แตะเพื่อเปลี่ยนรูป</span>' : ''}
+      <div class="info"><h2>${esc(hero.place)}</h2><p>${tripDates(hero)}${hero.budget ? ' · งบ ' + baht(hero.budget) : ''}</p>
+      <div class="bar"><div><i style="width:${st.pct}%"></i></div>${st.text}</div></div></div>`;
+  } else {
+    $('#tripHero').innerHTML = `<div class="card"><div class="empty"><b>✈️</b>เพิ่มทริปแรกด้านล่าง แล้ว Mon จะหารูปสถานที่ให้</div></div>`;
+  }
+  $('#tripN').textContent = trips.length ? trips.length + ' ทริป' : '';
+  $('#tripList').innerHTML = trips.map(t => `<div class="row"><span class="thumb" style="${tripPhoto(t) ? `background-image:url('${tripPhoto(t)}')` : ''}"></span>
+    <div class="grow">${esc(t.place)}<small>${tripDates(t)} · ${tripState(t).text}</small></div>
+    <button class="del" data-del="${t.id}" aria-label="ลบทริป">✕</button></div>`).join('') || '<div class="empty">ยังไม่มีทริป</div>';
+}
+
+async function loadPhotos(t) {
+  try {
+    t.photos = await findPhotos(t.place); t.pi = 0; saveTrips(); renderTrips();
+    $('#tMsg').textContent = t.photos.length ? '' : 'หารูปของสถานที่นี้ไม่เจอ ลองพิมพ์ชื่อเป็นภาษาอังกฤษ';
+  } catch (e) { $('#tMsg').textContent = 'โหลดรูปไม่ได้ ต้องต่อเน็ตก่อน'; }
+}
+
+$('#tripForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const t = {id: String(Date.now()), place: $('#tPlace').value.trim(), start: $('#tStart').value, end: $('#tEnd').value,
+    budget: Number($('#tBudget').value) || 0, created: todayIso, photos: [], pi: 0};
+  if (!t.place || !t.start || !t.end) return;
+  if (t.end < t.start) { $('#tMsg').textContent = 'วันกลับต้องไม่ก่อนวันไป'; return; }
+  trips.push(t); saveTrips(); renderTrips();
+  $('#tripForm').reset(); $('#tMsg').textContent = 'กำลังหารูป…';
+  loadPhotos(t);
+});
+$('#tripHero').addEventListener('click', e => {
+  const h = e.target.closest('.trip-hero'); if (!h) return;
+  const t = trips.filter(x => x.id === h.dataset.id)[0];
+  if (t && t.photos && t.photos.length > 1) { t.pi = (t.pi || 0) + 1; saveTrips(); renderTrips(); }
+});
+$('#tripList').addEventListener('click', e => {
+  const b = e.target.closest('[data-del]'); if (!b) return;
+  const t = trips.filter(x => x.id === b.dataset.del)[0];
+  if (t && confirm(`ลบทริป ${t.place}?`)) { trips = trips.filter(x => x !== t); saveTrips(); renderTrips(); }
+});
+renderTrips();
+const nextTrip = trips.filter(t => t.start > todayIso)[0];
+if (nextTrip) { tips.unshift([`อีก ${daysTo(nextTrip.start)} วันได้ไป${nextTrip.place}แล้ว ✈️`, tripDates(nextTrip)]); showTip(false); }
 
 const doneKey = 'mon-done';
 let done = {};
@@ -281,9 +525,17 @@ const vals = D.months.map(m => Math.max(m.mon, m.bank));
 const maxV = Math.max(...vals, 1);
 $('#bars').innerHTML = D.months.map((m, i) =>
   `<div class="${i === D.months.length - 1 ? 'cur' : ''}" title="${baht(vals[i])}"><i style="height:${vals[i] / maxV * 100}%"></i>${m.label}</div>`).join('');
-$('#cats').innerHTML = D.categories.map(c =>
-  `<div class="row"><span class="ic">${CAT_IC[c.name] || '📦'}</span><div class="grow">${esc(c.name)}<div class="prog"><i style="width:${c.pct}%"></i></div></div><span class="amt">${baht(c.amount)}</span></div>`).join('')
-  || '<div class="empty">ยังไม่มีรายจ่ายเดือนนี้</div>';
+const COLORS = ['#3d8bf2', '#ff8fab', '#ffb02e', '#2fb67c', '#9c8cff', '#8cc4ff'];
+const C2 = 2 * Math.PI * 38;
+let acc = 0;
+const donut = D.categories.length ? `<div class="donut"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="38" stroke="var(--blue-soft)"/>${
+  D.categories.map((c, i) => {
+    const len = c.amount / (D.month_total || 1) * C2, s = `<circle cx="50" cy="50" r="38" stroke="${COLORS[i % 6]}" stroke-dasharray="${len} ${C2 - len}" stroke-dashoffset="${-acc}"/>`;
+    acc += len; return s;
+  }).join('')}</svg><div class="legend">${D.categories.map((c, i) => `<div><i style="background:${COLORS[i % 6]}"></i>${esc(c.name)} ${c.pct}%</div>`).join('')}</div></div>` : '';
+$('#cats').innerHTML = donut + (D.categories.map((c, i) =>
+  `<div class="row"><span class="ic">${CAT_IC[c.name] || '📦'}</span><div class="grow">${esc(c.name)}<div class="prog"><i style="width:${c.pct}%;background:${COLORS[i % 6]}"></i></div></div><span class="amt">${baht(c.amount)}</span></div>`).join('')
+  || '<div class="empty">ยังไม่มีรายจ่ายเดือนนี้</div>');
 $('#expN').textContent = D.expenses.length + ' รายการ';
 $('#exps').innerHTML = D.expenses.map(e =>
   `<div class="row"><span class="ic">${CAT_IC[e.cat] || '📦'}</span><div class="grow"><div class="ell">${esc(e.text)}</div><small>${thDate(e.date)} · ${esc(e.cat)}</small></div><span class="amt">${baht(e.amount)}</span></div>`).join('');
@@ -350,6 +602,8 @@ function answer(q) {
   }
   if (/AI|เอไอ|ซอฟต์แวร์|Claude|OpenRouter/i.test(q))
     return 'ค่า AI เดือนนี้:\n' + (D.ai || []).filter(r => r.month || r.monthly).map(r => `• ${r.name} ${baht(r.month)}${r.monthly ? ' (รายเดือน ' + baht(r.monthly) + ')' : ''}`).join('\n');
+  if (/เที่ยว|ทริป|travel/i.test(q))
+    return trips.length ? 'ทริปของคุณ:\n' + trips.map(t => `• ${t.place} ${tripDates(t)} (${tripState(t).text})`).join('\n') : 'ยังไม่มีทริปครับ เพิ่มได้ที่หน้าเที่ยว';
   if (/กิน|อาหาร/.test(q)) {
     const F = D.food || {items: []};
     return `ค่าอาหารที่บันทึกเดือนนี้ ${baht(F.month_total)} ครับ\n` + F.items.slice(0, 5).map(f => `• ${thDate(f.date)} ${f.name}`).join('\n');
@@ -400,6 +654,10 @@ async function keyFromPassword(pw, enc) {
 }
 
 function lockApp() { store.del('mon-key'); location.reload(); }
+
+// หน้าต้อนรับแสดงแค่ครั้งแรก
+function hideSplash() { $('#splash').classList.add('hide'); store.set('mon-seen', '1'); }
+if (store.get('mon-seen')) $('#splash').style.display = 'none';
 
 async function boot() {
   if (window.MON_DATA) return start(window.MON_DATA);
